@@ -4,4 +4,4 @@ configmap:
 
 deployment:
   replicas: 2
-  imageversion: latest
+  imageversion: stable-perl
