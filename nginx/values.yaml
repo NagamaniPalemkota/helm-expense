@@ -1,5 +1,6 @@
 configmap:
   port: 8080
+  nodeport: 32760
 
 deployment:
   replicas: 2
