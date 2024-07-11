@@ -4,4 +4,4 @@ configmap:
 
 deployment:
   replicas: 2
-  imageversion: stable-perl
+  imageversion: stable-bookworm-perl
