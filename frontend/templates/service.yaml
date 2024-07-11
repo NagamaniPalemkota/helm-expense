@@ -1,0 +1,16 @@
+#creating frontend service to connect to frontend
+apiVersion: v1
+kind: Service
+metadata: 
+  name: frontend
+  namespace: expense
+spec:
+  type: LoadBalancer
+  selector:
+    app: expense
+    tier: web
+    component: frontend
+  ports:
+    - protocol: TCP
+      port: 80   #service port
+      targetPort: {{ .Values.configmap.port }}  #pod port

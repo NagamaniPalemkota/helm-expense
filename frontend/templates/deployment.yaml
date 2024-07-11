@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: frontend
+  namespace: expense
+  labels:
+    app: expense
+    tier: web
+    component: frontend
+  #these labels belong to deployment set resource
+spec:
+  replicas: {{ .Values.deployment.replicas }} #specify no. of pods, as per our requirement
+  selector: #select the pods with these labels
+    matchLabels:
+      app: expense
+      tier: web
+      component: frontend
+    #below mentioned code refers to pod definition
+  template:
+    metadata:
+      labels:
+        app: expense
+        tier: web
+        component: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: nagamanimuvva/frontend:{{ .Values.deployment.version }}
+        volumeMounts:
+        - name: nginx-conf
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
+      volumes:
+      - name: nginx-conf
+        configMap:
+          name: frontend
+          items:
+          - key: nginx.conf
+            path: nginx.conf
+      
+---
