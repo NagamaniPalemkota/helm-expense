@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: mysql
+  namespace: expense
+  labels:
+    app: expense
+    tier: db
+    component: mysql
+  #these labels belong to deployment set resource
+spec:
+  replicas: {{ .Values.deployment.replicas }} #specify no. of pods, as per our requirement
+  selector: #select the pods with these labels
+    matchLabels:
+      app: expense
+      tier: db
+      component: mysql
+    #below mentioned code refers to pod definition
+  template:
+    metadata:
+      labels:
+        app: expense
+        tier: db
+        component: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: nagamanimuvva/mysql:{{ .Values.deployment.version }}
+---
