@@ -1,0 +1,35 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: backend
+  namespace: expense
+  labels:
+    app: expense
+    tier: app
+    component: backend
+  #these labels belong to deployment set resource
+spec:
+  replicas: 2 #specify no. of pods, as per our requirement
+  selector: #select the pods with these labels
+    matchLabels:
+      app: expense
+      tier: app
+      component: backend
+    #below mentioned code refers to pod definition
+  template:
+    metadata:
+      labels:
+        app: expense
+        tier: app
+        component: backend
+    spec:
+      containers:
+      - name: backend
+        image: nagamanimuvva/backend:{{ .Values.deployment.version }}
+        envFrom:
+        - configMapRef:
+            name: backend-configmap
+---

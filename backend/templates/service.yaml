@@ -1,0 +1,15 @@
+#creating backend service to connect to backend
+apiVersion: v1
+kind: Service
+metadata: 
+  name: backend
+  namespace: expense
+spec:
+  selector:
+    app: expense
+    tier: app
+    component: backend
+  ports:
+    - protocol: TCP
+      port: 8080   #service port
+      targetPort: 8080  #pod port
