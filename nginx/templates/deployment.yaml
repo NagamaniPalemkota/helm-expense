@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginxdeployment
+  labels:
+    app: nginx
+    component: helm
+  #these labels belong to deployment set resource
+spec:
+  replicas: {{ .Values.deployment.replicas }} #specify no. of pods, as per our requirement
+  selector: #select the pods with these labels
+    matchLabels:
+      component: helm
+      app: nginx
+    #below mentioned code refers to pod definition
+  template:
+    metadata:
+      labels:
+        component: helm
+        app: nginx
+        project: testing
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:{{ .Values.deployment.imageversion }}
